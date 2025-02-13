@@ -2,7 +2,7 @@
 .env
 
 # Diretórios do ambiente virtual
-venv/
+env/
 .env/
 
 # Arquivos de banco de dados
