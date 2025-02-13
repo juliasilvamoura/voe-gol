@@ -1,0 +1,195 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Voe Gol",
+      "description": "Documentação da API de Voos",
+      "version": "1.0.0"
+    },
+    "host": "localhost:8000",
+    "schemes": ["http"],
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Verificar se a API está funcionando",
+          "responses": {
+            "200": {
+              "description": "API ativa",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/voos/mercado": {
+        "get": {
+          "summary": "Obter lista de mercados",
+          "responses": {
+            "200": {
+              "description": "Lista de mercados",
+              "schema": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Filtrar voos por mercado",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "mercado",
+              "required": true,
+              "description": "Nome do mercado para filtragem",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mercado": {
+                    "type": "string",
+                    "exemplo": "SBARSBGL"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Dados filtrados por mercado",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dados" :{
+                    "type": "array",
+                    "items":{ "type": "string"}
+                  }
+                }
+              }
+            },
+            "400":{
+              "description": "Erro ao filtrar o mercado"
+            }
+          }
+        }
+      },
+      "/voos/intervalo": {
+        "get": {
+          "summary": "Filtrar voos por intervalo de datas",
+          "parameters": [
+            { "in": "query", "name": "ano_inicio", "type": "integer", "required": true },
+            { "in": "query", "name": "mes_inicio", "type": "integer", "required": true },
+            { "in": "query", "name": "ano_fim", "type": "integer", "required": true },
+            { "in": "query", "name": "mes_fim", "type": "integer", "required": true }
+          ],
+          "responses": {
+            "200": { "description": "Lista de voos encontrados" },
+            "400": { "description": "Erro ao informar o intervalo" },
+            "404": { "description": "Nenhum voo encontrado" }
+          }
+        }
+      },
+      "/voos/grafico": {
+        "get": {
+          "summary": "Gerar gráfico de voos",
+          "responses": {
+            "200": { "description": "Página do gráfico renderizada" }
+          }
+        },
+        "post": {
+          "summary": "Gerar gráfico com intervalo e mercado",
+          "parameters": [
+            { "in": "formData", "name": "ano_inicio", "type": "integer", "required": true },
+            { "in": "formData", "name": "mes_inicio", "type": "integer", "required": true },
+            { "in": "formData", "name": "ano_fim", "type": "integer", "required": true },
+            { "in": "formData", "name": "mes_fim", "type": "integer", "required": true },
+            { "in": "formData", "name": "mercado", "type": "string", "required": false }
+          ],
+          "responses": {
+            "200": { "description": "Gráfico gerado" },
+            "400": { "description": "Erro ao informar intervalo" },
+            "404": { "description": "Nenhum voo encontrado" }
+          }
+        }
+      },
+      "/users": {
+        "post": {
+          "summary": "Criar novo usuário",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": { "description": "Usuário criado" },
+            "400": { "description": "Erro ao criar usuário" },
+            "404": { "description": "Usuário não encontrado" }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "summary": "Autenticação de usuário",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Autenticação bem-sucedida",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": { "type": "string" },
+                  "name": { "type": "string" },
+                  "email": { "type": "string" }
+                }
+              }
+            },
+            "400": { "description": "Campos obrigatórios ausentes" },
+            "401": { "description": "Credenciais inválidas" }
+          }
+        }
+      },
+      "/logout": {
+        "post": {
+          "summary": "Logout do usuário",
+          "security": [{ "BearerAuth": [] }],
+          "responses": {
+            "200": { "description": "Logout realizado com sucesso" }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Autenticação via token JWT. Use 'Bearer <TOKEN>'"
+      }
+    }
+  }
+  

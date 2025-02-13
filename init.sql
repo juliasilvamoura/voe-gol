@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS voos (
+    id SERIAL PRIMARY KEY,
+    ano INT NOT NULL,
+    mes INT NOT NULL,
+    mercado VARCHAR(10) NOT NULL,
+    rpk FLOAT NOT NULL
+);

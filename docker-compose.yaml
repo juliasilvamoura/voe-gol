@@ -1,0 +1,40 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres"
+    container_name: anac_db
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=anac      
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  app:
+    build: .
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://root:root@postgres/anac
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    command: >
+      bash -c "flask init-db && flask run --host=0.0.0.0 --port=8000"
+
+  notebook:
+    image: jupyter/pyspark-notebook
+    container_name: anac_notebook
+    depends_on:
+      - postgres
+    environment:
+      - PYSPARK_DRIVER_PYTHON=python
+      - PYSPARK_DRIVER_PYTHON_OPTS=notebook
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    ports:
+      - "8888:8888"
