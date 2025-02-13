@@ -23,6 +23,7 @@ Install Python 3.11.0
 
 # Ambient configuration Local API:
 <ul>
+<li>Create a folder in the root of the project called "dados" and add the file, renaming it to "dados_gol.csv".</li>
 <li>Create a .env file using the env_example template</li>
 <li>Execute the command: <i>pip install -r requirements.txt
 </i><br>
@@ -36,6 +37,7 @@ To install the project dependencies</li>
 
 # Ambient configuration docker image API:
 <ul>
+<li>Create a folder in the root of the project called "dados" and add the file, renaming it to "dados_gol.csv".</li>
 <li>Create a .env file using the env_example template</li>
 <li>Execute the command: <i>pip install -r requirements.txt
 </i><br>
