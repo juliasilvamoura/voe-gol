@@ -1,0 +1,21 @@
+# Arquivos de ambiente
+.env
+
+# Diretórios do ambiente virtual
+venv/
+.env/
+
+# Arquivos de banco de dados
+postgres-data/
+
+# Arquivos de compilação do Python
+__pycache__/
+*.py[cod]
+
+# Arquivos de configuração do IDE
+.vscode/
+.idea/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
