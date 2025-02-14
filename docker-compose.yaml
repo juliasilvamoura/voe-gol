@@ -25,16 +25,3 @@ services:
       - postgres
     command: >
       bash -c "flask init-db && flask run --host=0.0.0.0 --port=8000"
-
-  notebook:
-    image: jupyter/pyspark-notebook
-    container_name: anac_notebook
-    depends_on:
-      - postgres
-    environment:
-      - PYSPARK_DRIVER_PYTHON=python
-      - PYSPARK_DRIVER_PYTHON_OPTS=notebook
-    volumes:
-      - ./notebooks:/home/jovyan/work
-    ports:
-      - "8888:8888"
